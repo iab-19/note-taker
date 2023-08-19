@@ -12,6 +12,10 @@ app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, 'public/notes.html')) // Navigate to notes.html
 );
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html')); // Reroute to index.html whenever an invalid URL is entered
+});
+
 // Initialize server
 app.listen(PORT, () =>
     console.log(`App listening at http://localhost:${PORT}`)
