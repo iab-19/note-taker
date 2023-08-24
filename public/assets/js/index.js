@@ -1,9 +1,11 @@
+// Initialize query selectors
 let noteTitle;
 let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+// Adds query selectors if url is at the notes section
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
@@ -25,6 +27,7 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
+// fetch notes
 const getNotes = () =>
   fetch('/api/notes', {
     method: 'GET',
@@ -33,6 +36,8 @@ const getNotes = () =>
     },
   });
 
+
+ // save notes
 const saveNote = (note) =>
   fetch('/api/notes', {
     method: 'POST',
@@ -42,6 +47,7 @@ const saveNote = (note) =>
     body: JSON.stringify(note),
   });
 
+// Delete notes
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
@@ -50,6 +56,8 @@ const deleteNote = (id) =>
     },
   });
 
+
+// render active notes
 const renderActiveNote = () => {
   hide(saveNoteBtn);
 
