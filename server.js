@@ -2,10 +2,13 @@ const express = require('express'); // Allow the use of express
 const path = require('path'); // Import built in Node.js package to resolve path of files that are located on the server
 const genUniqueId = require('generate-unique-id'); // Allow the use of the generate unique id package
 // const notes = require('./db/db.json');
+const fs = require('fs');
 
 
 const app = express(); // Initialize an instance of express
 const PORT = 2023;
+
+
 
 app.use(express.static('public')); // Point static middleware to the public folder
 app.use(express.urlencoded({ extended: true }));
@@ -31,24 +34,59 @@ app.get('/api/notes', (req, res) => {
 // the new note to the client at the route POST/api.notes
 app.post('/api/notes', (req, res) => {
     // res.json(`${req.method} request received`);
-    console.info(`${req.method} request received`);
+    console.info(`${req.method} request received to add a new note`);
 
-    let response;
-
-    if (req.body && req.body.title) {
-        response = {
-            status: 'success',
-            data: req.body,
+    const { title, text } = req.body;
+    console.info(req.body);
+    if (title && text) {
+        const newNote = {
+            title,
+            text,
+            // generate a unique id with 4 characters
+            noteId : genUniqueId({
+                length: 4
+               }),
         };
-        res.json(`Note title and text has been added. Title: ${req.body.title}. Text: ${req.body.text}`)
+
+        // read file and get existing notes
+        fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+            if (err) {
+                console.error(err);
+            } else {
+                // convert string to json
+                const parsedNotes = JSON.parse(data);
+
+                // Add a new note
+                parsedNotes.push(newNote);
+
+                // Write updated notes to file
+                fs.writeFile(
+                    './db/db.json',
+                    JSON.stringify(parsedNotes, null, 4),
+                    (writeError) =>
+                        writeError
+                        ? console.error(writeError)
+                        : console.log(`Note has been written to JSON file`)
+                        );
+            }
+        })
+        // const noteString = JSON.stringify(newNote);
+
+        const response = {
+            status: 'success',
+            data: newNote,
+        };
+        console.log(response);
+
+        // res.status(201).json(response);
+        // res.json(`Note title and text has been added. Title: ${req.body.title}. Text: ${req.body.text}`)
     } else {
         res.json('Request body must contain a title and some text')
     }
 
-    console.log(req.body);
-    // console.log(req.body.noteText);
 
-    // console.info(req.rawHeaders);
+    // Convert note data to string to save to db.json file
+
 
 
 
