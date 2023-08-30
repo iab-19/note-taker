@@ -1,21 +1,15 @@
 const note = require('express').Router();
 const genUniqueId = require('generate-unique-id'); // Allow the use of the generate unique id package
 const { readFromFile, writeToFile, readAndAppend } = require('../helpers/fsUtils');
-const dbData = require('../db/db.json');
 
-//
-// TODO: Read the db.json file and return all saved notes as JSON at the route GET/api/notes
+// Read the db.json file and return all saved notes as JSON at the route GET/api/notes
 note.get('/', (req, res) => {
     console.info(`${req.method} request received for notes`);
-    // res.json(dbData)
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-// note.get('/:id', (req, res) => {
 
-// })
-
-// TODO: Recive a new note to save on the request body, add it to the db.json file, and return
+// Recive a new note to save on the request body, add it to the db.json file, and return
 // the new note to the client at the route POST/api.notes
 note.post('/', (req, res) => {
     console.info(`${req.method} request received to add a new note`);
@@ -47,11 +41,25 @@ note.post('/', (req, res) => {
         res.json('Request body must contain a title and some text');
     }
 
-
-
 });
 
 
-// TODO: Delete method
+// Delete method
+note.delete('/:noteId', (req, res) => {
+    const note_id = req.params.noteId;
+    readFromFile('./db/db.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+        // Make a new array for the notes except the deleted note
+        const result = json.filter((note) => note.noteId !== note_id);
+
+        // Save array
+        writeToFile('./db/db.json', result);
+
+        // Respond to the Delete request
+        res.json(`Note ${note_id} has been deleted`);
+    });
+});
+
 
 module.exports = note;
