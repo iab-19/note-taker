@@ -1,7 +1,17 @@
 [
     {
-        "title":"Test Title",
-        "text":"Test text",
-        "noteId":"0001"
+        "title": "Homework",
+        "text": "Write notes\nWrite out plan\nExecute",
+        "noteId": "nrs8"
+    },
+    {
+        "title": "Grocery",
+        "text": "Eggs\nMilk\nBread\nOnions",
+        "noteId": "hc1l"
+    },
+    {
+        "title": "Bills",
+        "text": "Water\nElectricity\nGas",
+        "noteId": "iim7"
     }
 ]
