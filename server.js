@@ -3,6 +3,7 @@ const path = require('path'); // Import built in Node.js package to resolve path
 const genUniqueId = require('generate-unique-id'); // Allow the use of the generate unique id package
 // const notes = require('./db/db.json');
 const fs = require('fs');
+const api = require('./routes/index')
 
 
 const app = express(); // Initialize an instance of express
@@ -10,10 +11,13 @@ const PORT = 2023;
 
 
 
-app.use(express.static('public')); // Point static middleware to the public folder
+// Middleware for parsing JSON and urlencoded form data
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const dbData = require('./db/db.json');
+
+app.use(express.static('public')); // Point static middleware to the public folder
 
 // Navigate to index.html
 app.get('/', (req, res) => res.send('Navigate to /notes'));
@@ -36,6 +40,7 @@ app.post('/api/notes', (req, res) => {
     // res.json(`${req.method} request received`);
     console.info(`${req.method} request received to add a new note`);
 
+    // Destructuring assignment
     const { title, text } = req.body;
     console.info(req.body);
     if (title && text) {
