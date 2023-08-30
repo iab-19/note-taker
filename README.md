@@ -82,4 +82,4 @@
 
   If you have any questions, please reach out to me via email: iab.jr10@gmail.com.
 
-  [Screenshot of application](./public/assets/images/note-taker-screenshot.png)
+  ![Screenshot of application](./public/assets/images/note-taker-screenshot.png)
