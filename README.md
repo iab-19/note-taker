@@ -73,8 +73,8 @@
   industry standard, but you can always write your own.-->
 
   ## Tests
-  tbd
-
+  Used insomnia to test the get, post, and delete routes
+  ![Screenshot of application](./public/assets/images/note-taker-screenshot.png)
   <!-- Go the extra mile and write tests for your application. Then provide examples on how to run them here. -->
 
   ## Questions
@@ -82,4 +82,4 @@
 
   If you have any questions, please reach out to me via email: iab.jr10@gmail.com.
 
-  ![Screenshot of application](./public/assets/images/note-taker-screenshot.png)
+  
