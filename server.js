@@ -2,8 +2,8 @@ const express = require('express'); // Allow the use of express
 const path = require('path'); // Import built in Node.js package to resolve path of files that are located on the server
 const api = require('./routes/index');
 
-// const dbData = require('../db/db.json');
-const PORT = 2023;
+
+const PORT = process.env.PORT || 2023;
 
 const app = express(); // Initialize an instance of express
 
